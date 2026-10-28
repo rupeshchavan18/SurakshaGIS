@@ -1,0 +1,212 @@
+@import 'leaflet/dist/leaflet.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root,
+  html.dark {
+    --gis-darkest-rgb: 8 13 26;
+    --gis-dark-rgb: 15 23 42;
+    --gis-surface-rgb: 23 34 59;
+    --gis-card-rgb: 30 41 59;
+    --gis-border-rgb: 46 62 92;
+    --gis-border-light-rgb: 63 82 119;
+    --gis-text-primary: #f8fafc;
+    --gis-text-secondary: #94a3b8;
+    --gis-text-muted: #64748b;
+    color-scheme: dark;
+  }
+
+  html.light {
+    --gis-darkest-rgb: 241 245 249;
+    --gis-dark-rgb: 255 255 255;
+    --gis-surface-rgb: 248 250 252;
+    --gis-card-rgb: 255 255 255;
+    --gis-border-rgb: 203 213 225;
+    --gis-border-light-rgb: 226 232 240;
+    --gis-text-primary: #0f172a;
+    --gis-text-secondary: #475569;
+    --gis-text-muted: #64748b;
+    color-scheme: light;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgb(var(--gis-darkest-rgb));
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--gis-border-rgb));
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--gis-border-light-rgb));
+  }
+}
+
+@layer utilities {
+  .gis-glass {
+    background: rgb(var(--gis-surface-rgb) / 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgb(var(--gis-border-light-rgb) / 0.35);
+  }
+  
+  .gis-glass-dark {
+    background: rgb(var(--gis-dark-rgb) / 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgb(var(--gis-border-rgb) / 0.45);
+  }
+
+  .gis-card-hover {
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .gis-card-hover:hover {
+    border-color: rgba(37, 99, 235, 0.6);
+    box-shadow: 0 4px 20px -2px rgba(37, 99, 235, 0.15);
+    transform: translateY(-1px);
+  }
+}
+
+/* ==============================================================================
+   LEAFLET GIS STYLING & CUSTOM MARKER FIXES
+   ============================================================================== */
+
+/* Fix Leaflet DivIcon default square box */
+.leaflet-div-icon {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Leaflet GIS Tooltip */
+.gis-tooltip {
+  background: rgba(15, 23, 42, 0.94) !important;
+  border: 1px solid rgba(46, 62, 92, 0.85) !important;
+  border-radius: 8px !important;
+  color: #f8fafc !important;
+  font-family: 'Inter', system-ui, sans-serif !important;
+  font-size: 11px !important;
+  padding: 8px 12px !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  backdrop-filter: blur(8px) !important;
+  white-space: normal !important;
+  max-width: 280px !important;
+}
+.light .gis-tooltip {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid rgba(203, 213, 225, 0.9) !important;
+  color: #0f172a !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Leaflet Tooltip Arrows */
+.gis-tooltip.leaflet-tooltip-top:before {
+  border-top-color: rgba(15, 23, 42, 0.94) !important;
+}
+.gis-tooltip.leaflet-tooltip-bottom:before {
+  border-bottom-color: rgba(15, 23, 42, 0.94) !important;
+}
+.gis-tooltip.leaflet-tooltip-left:before {
+  border-left-color: rgba(15, 23, 42, 0.94) !important;
+}
+.gis-tooltip.leaflet-tooltip-right:before {
+  border-right-color: rgba(15, 23, 42, 0.94) !important;
+}
+.light .gis-tooltip.leaflet-tooltip-top:before {
+  border-top-color: rgba(255, 255, 255, 0.95) !important;
+}
+.light .gis-tooltip.leaflet-tooltip-bottom:before {
+  border-bottom-color: rgba(255, 255, 255, 0.95) !important;
+}
+.light .gis-tooltip.leaflet-tooltip-left:before {
+  border-left-color: rgba(255, 255, 255, 0.95) !important;
+}
+.light .gis-tooltip.leaflet-tooltip-right:before {
+  border-right-color: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* Leaflet Popup Container */
+.leaflet-popup-content-wrapper {
+  background: rgba(15, 23, 42, 0.97) !important;
+  color: #f8fafc !important;
+  border: 1px solid #2e3e5c !important;
+  border-radius: 12px !important;
+  box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.6) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  backdrop-filter: blur(12px) !important;
+  padding: 0 !important;
+}
+.light .leaflet-popup-content-wrapper {
+  background: rgba(255, 255, 255, 0.98) !important;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1 !important;
+  box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.15) !important;
+}
+.light .leaflet-popup-content {
+  color: #0f172a !important;
+}
+.light .leaflet-popup-content strong {
+  color: #0f172a !important;
+}
+.light .leaflet-popup-content .text-white {
+  color: #0f172a !important;
+}
+.light .leaflet-popup-content .text-slate-300 {
+  color: #334155 !important;
+}
+.light .leaflet-popup-content .text-slate-400 {
+  color: #475569 !important;
+}
+.light .leaflet-popup-content .bg-gis-surface {
+  background-color: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+}
+.light .leaflet-popup-content .border-gis-border {
+  border-color: #e2e8f0 !important;
+}
+
+.leaflet-popup-content {
+  margin: 12px 14px !important;
+  line-height: 1.4 !important;
+}
+.leaflet-popup-tip {
+  background: #0f172a !important;
+}
+.light .leaflet-popup-tip {
+  background: #ffffff !important;
+}
+.leaflet-popup-close-button {
+  color: #94a3b8 !important;
+  padding: 8px !important;
+  font-size: 16px !important;
+}
+.leaflet-popup-close-button:hover {
+  color: #ffffff !important;
+}
+.light .leaflet-popup-close-button:hover {
+  color: #0f172a !important;
+}
+
+/* Marker pulse animations */
+@keyframes markerPulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+  70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+.animate-marker-pulse {
+  animation: markerPulse 2s infinite;
+}
+
+/* Light mode specific text helpers */
+.light body {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}

@@ -1,0 +1,27 @@
+# ==============================================================================
+# SurakshaGIS - Netlify Production Configuration
+# ==============================================================================
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# SPA Fallback: Direct all client routes to index.html
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Cache immutable Vite production assets
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Cache and serve CSV dataset
+[[headers]]
+  for = "/docs/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+    Access-Control-Allow-Origin = "*"
+
