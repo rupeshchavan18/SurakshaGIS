@@ -38,6 +38,7 @@ export const BackendStatusModal: React.FC<BackendStatusModalProps> = ({ isOpen, 
   const rawUrl = import.meta.env.VITE_SUPABASE_URL as string | undefined;
   const isUrlProvided = Boolean(rawUrl && rawUrl.trim() !== '' && !rawUrl.includes('your-project-id'));
   const keyType = getSupabaseKeyType();
+  const isPostgisConnected = backendMode === 'supabase_postgis';
 
   const migrationsList = [
     {
@@ -51,8 +52,10 @@ export const BackendStatusModal: React.FC<BackendStatusModalProps> = ({ isOpen, 
       step: '02',
       file: '20261022000002_create_core_tables.sql',
       desc: 'Creates 9 tables with EPSG:4326 geometries, constraints, updated_at triggers, and GiST indexes.',
-      status: 'Pending SQL Run (Tables Missing)',
-      statusColor: 'text-amber-400 bg-amber-950/60 border-amber-500/30',
+      status: isPostgisConnected ? 'Verified (9 Tables & GiST Active)' : 'Pending SQL Run (Tables Missing)',
+      statusColor: isPostgisConnected
+        ? 'text-emerald-400 bg-emerald-950/60 border-emerald-500/30'
+        : 'text-amber-400 bg-amber-950/60 border-amber-500/30',
     },
     {
       step: '03',
@@ -65,15 +68,19 @@ export const BackendStatusModal: React.FC<BackendStatusModalProps> = ({ isOpen, 
       step: '04',
       file: '20261022000004_create_rls_policies.sql',
       desc: 'Applies Row Level Security (RLS) and least-privilege role policies for public, surveyors, planners, and SDMA admins.',
-      status: 'Pending SQL Run (RLS & Triggers)',
-      statusColor: 'text-amber-400 bg-amber-950/60 border-amber-500/30',
+      status: isPostgisConnected ? 'Verified (RLS & Triggers Enforced)' : 'Pending SQL Run (RLS & Triggers)',
+      statusColor: isPostgisConnected
+        ? 'text-emerald-400 bg-emerald-950/60 border-emerald-500/30'
+        : 'text-amber-400 bg-amber-950/60 border-amber-500/30',
     },
     {
       step: '05',
       file: 'seed_data.sql',
       desc: 'Populates authentic ground-truth geometries for Wayanad, Chamoli, and Majuli plus demo scenarios.',
-      status: 'Optional (Ground Truth)',
-      statusColor: 'text-slate-400 bg-slate-900/60 border-slate-700/30',
+      status: isPostgisConnected ? 'Verified (Ground Truth Seeded)' : 'Optional (Ground Truth)',
+      statusColor: isPostgisConnected
+        ? 'text-emerald-400 bg-emerald-950/60 border-emerald-500/30'
+        : 'text-slate-400 bg-slate-900/60 border-slate-700/30',
     },
   ];
 
