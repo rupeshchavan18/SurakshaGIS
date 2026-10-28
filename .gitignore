@@ -33,3 +33,6 @@ dist-ssr
 
 # TypeScript build info
 *.tsbuildinfo
+
+# Netlify
+.netlify
